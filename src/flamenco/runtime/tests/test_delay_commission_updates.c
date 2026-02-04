@@ -236,9 +236,9 @@ create_vote_account( test_env_t * env, uchar commission, ulong epoch_credits_epo
 
   fd_vote_states_t * vote_states = fd_bank_vote_states_locking_modify( env->bank );
   fd_vote_state_ele_t * ele = fd_vote_states_update( vote_states, &validator_key );
-  ele->node_account = authority_key;
-  ele->commission   = commission;
-  ele->stake        = TEST_LAMPORTS;
+  ele->node_account    = authority_key;
+  ele->commission_bps  = (ushort)(commission * 100U);
+  ele->stake           = TEST_LAMPORTS;
   fd_bank_vote_states_end_locking_modify( env->bank );
 
   fd_wksp_free_laddr( epoch_cred_mem );
@@ -282,18 +282,18 @@ static void
 set_commission_prev( test_env_t * env, uchar commission ) {
   fd_vote_states_t * vs = fd_bank_vote_states_prev_modify( env->bank );
   fd_vote_state_ele_t * ele = fd_vote_states_update( vs, &validator_key );
-  ele->node_account = authority_key;
-  ele->commission = commission;
-  ele->stake = TEST_LAMPORTS;
+  ele->node_account   = authority_key;
+  ele->commission_bps = (ushort)(commission * 100U);
+  ele->stake          = TEST_LAMPORTS;
 }
 
 static void
 set_commission_prev_prev( test_env_t * env, uchar commission ) {
   fd_vote_states_t * vs = fd_bank_vote_states_prev_prev_modify( env->bank );
   fd_vote_state_ele_t * ele = fd_vote_states_update( vs, &validator_key );
-  ele->node_account = authority_key;
-  ele->commission = commission;
-  ele->stake = TEST_LAMPORTS;
+  ele->node_account   = authority_key;
+  ele->commission_bps = (ushort)(commission * 100U);
+  ele->stake          = TEST_LAMPORTS;
 }
 
 /* ============================================================================
